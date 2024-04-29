@@ -1,0 +1,34 @@
+{
+  "version": 2,
+  "dgSpecHash": "1IPjZiZhKBjct5EM7T35VYf3iJxi8iOc5KTdQX/jn+Z6K40esAUWj7c/11wVXxYgo3/23sv00SMyR1Y0vh/ePQ==",
+  "success": true,
+  "projectFilePath": "/Users/galinaabdurashitova/Desktop/Projects/VisualStudioProjects/TFL-app-using-libraries-v2/TFLAppLibraries/TFLAppLibraries/TFLAppLibraries.csproj",
+  "expectedPackageFiles": [
+    "/Users/galinaabdurashitova/.nuget/packages/microsoft.visualstudio.graphmodel/17.9.37000/microsoft.visualstudio.graphmodel.17.9.37000.nupkg.sha512",
+    "/Users/galinaabdurashitova/.nuget/packages/microsoft.visualstudio.interop/17.9.37000/microsoft.visualstudio.interop.17.9.37000.nupkg.sha512",
+    "/Users/galinaabdurashitova/.nuget/packages/quickgraph/3.6.61119.7/quickgraph.3.6.61119.7.nupkg.sha512",
+    "/Users/galinaabdurashitova/.nuget/packages/system.componentmodel.composition/8.0.0/system.componentmodel.composition.8.0.0.nupkg.sha512"
+  ],
+  "logs": [
+    {
+      "code": "NU1701",
+      "level": "Warning",
+      "warningLevel": 1,
+      "message": "Package 'Microsoft.VisualStudio.GraphModel 17.9.37000' was restored using '.NETFramework,Version=v4.6.1, .NETFramework,Version=v4.6.2, .NETFramework,Version=v4.7, .NETFramework,Version=v4.7.1, .NETFramework,Version=v4.7.2, .NETFramework,Version=v4.8, .NETFramework,Version=v4.8.1' instead of the project target framework 'net7.0'. This package may not be fully compatible with your project.",
+      "libraryId": "Microsoft.VisualStudio.GraphModel",
+      "targetGraphs": [
+        "net7.0"
+      ]
+    },
+    {
+      "code": "NU1701",
+      "level": "Warning",
+      "warningLevel": 1,
+      "message": "Package 'QuickGraph 3.6.61119.7' was restored using '.NETFramework,Version=v4.6.1, .NETFramework,Version=v4.6.2, .NETFramework,Version=v4.7, .NETFramework,Version=v4.7.1, .NETFramework,Version=v4.7.2, .NETFramework,Version=v4.8, .NETFramework,Version=v4.8.1' instead of the project target framework 'net7.0'. This package may not be fully compatible with your project.",
+      "libraryId": "QuickGraph",
+      "targetGraphs": [
+        "net7.0"
+      ]
+    }
+  ]
+}

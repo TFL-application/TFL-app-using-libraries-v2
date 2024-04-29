@@ -1,0 +1,25 @@
+﻿<Properties StartupConfiguration="{82E4898D-C19B-4445-A9FA-A8C03DA4936E}|Default">
+  <MonoDevelop.Ide.DebuggingService.PinnedWatches />
+  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
+  <MonoDevelop.Ide.DebuggingService.Breakpoints>
+    <BreakpointStore />
+  </MonoDevelop.Ide.DebuggingService.Breakpoints>
+  <MonoDevelop.Ide.Workbench ActiveDocument="TFLAppLibraries/Program.cs">
+    <Files>
+      <File FileName="TFLAppLibraries/Program.cs" Line="1" Column="1" />
+    </Files>
+    <Pads>
+      <Pad Id="ProjectPad">
+        <State name="__root__">
+          <Node name="TFLAppLibraries" expanded="True">
+            <Node name="TFLAppLibraries" expanded="True">
+              <Node name="Program.cs" selected="True" />
+            </Node>
+          </Node>
+        </State>
+      </Pad>
+    </Pads>
+  </MonoDevelop.Ide.Workbench>
+  <MultiItemStartupConfigurations />
+  <MonoDevelop.Ide.ItemProperties.TFLAppLibraries FirstBuild="True" PreferredExecutionTarget="MonoDevelop.Default" />
+</Properties>

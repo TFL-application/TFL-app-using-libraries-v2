@@ -1,0 +1,71 @@
+{
+  "format": 1,
+  "restore": {
+    "/Users/galinaabdurashitova/Desktop/Projects/VisualStudioProjects/TFL-app-using-libraries-v2/TFLAppLibraries/TFLAppLibraries/TFLAppLibraries.csproj": {}
+  },
+  "projects": {
+    "/Users/galinaabdurashitova/Desktop/Projects/VisualStudioProjects/TFL-app-using-libraries-v2/TFLAppLibraries/TFLAppLibraries/TFLAppLibraries.csproj": {
+      "version": "1.0.0",
+      "restore": {
+        "projectUniqueName": "/Users/galinaabdurashitova/Desktop/Projects/VisualStudioProjects/TFL-app-using-libraries-v2/TFLAppLibraries/TFLAppLibraries/TFLAppLibraries.csproj",
+        "projectName": "TFLAppLibraries",
+        "projectPath": "/Users/galinaabdurashitova/Desktop/Projects/VisualStudioProjects/TFL-app-using-libraries-v2/TFLAppLibraries/TFLAppLibraries/TFLAppLibraries.csproj",
+        "packagesPath": "/Users/galinaabdurashitova/.nuget/packages/",
+        "outputPath": "/Users/galinaabdurashitova/Desktop/Projects/VisualStudioProjects/TFL-app-using-libraries-v2/TFLAppLibraries/TFLAppLibraries/obj/",
+        "projectStyle": "PackageReference",
+        "configFilePaths": [
+          "/Users/galinaabdurashitova/.nuget/NuGet/NuGet.Config"
+        ],
+        "originalTargetFrameworks": [
+          "net7.0"
+        ],
+        "sources": {
+          "https://api.nuget.org/v3/index.json": {}
+        },
+        "frameworks": {
+          "net7.0": {
+            "targetAlias": "net7.0",
+            "projectReferences": {}
+          }
+        },
+        "warningProperties": {
+          "warnAsError": [
+            "NU1605"
+          ]
+        }
+      },
+      "frameworks": {
+        "net7.0": {
+          "targetAlias": "net7.0",
+          "dependencies": {
+            "Microsoft.VisualStudio.GraphModel": {
+              "target": "Package",
+              "version": "[17.9.37000, )"
+            },
+            "QuickGraph": {
+              "target": "Package",
+              "version": "[3.6.61119.7, )"
+            }
+          },
+          "imports": [
+            "net461",
+            "net462",
+            "net47",
+            "net471",
+            "net472",
+            "net48",
+            "net481"
+          ],
+          "assetTargetFallback": true,
+          "warn": true,
+          "frameworkReferences": {
+            "Microsoft.NETCore.App": {
+              "privateAssets": "all"
+            }
+          },
+          "runtimeIdentifierGraphPath": "/usr/local/share/dotnet/sdk/7.0.403/RuntimeIdentifierGraph.json"
+        }
+      }
+    }
+  }
+}
