@@ -1,0 +1,14 @@
+/Users/naima/Projects/Edge track and change/Edge track and change/obj/Debug/net7.0/Edge track and change.GeneratedMSBuildEditorConfig.editorconfig
+/Users/naima/Projects/Edge track and change/Edge track and change/obj/Debug/net7.0/Edge track and change.AssemblyInfoInputs.cache
+/Users/naima/Projects/Edge track and change/Edge track and change/obj/Debug/net7.0/Edge track and change.AssemblyInfo.cs
+/Users/naima/Projects/Edge track and change/Edge track and change/obj/Debug/net7.0/Edge track and change.csproj.CoreCompileInputs.cache
+/Users/naima/Projects/Edge track and change/Edge track and change/bin/Debug/net7.0/Edge track and change
+/Users/naima/Projects/Edge track and change/Edge track and change/bin/Debug/net7.0/Edge track and change.deps.json
+/Users/naima/Projects/Edge track and change/Edge track and change/bin/Debug/net7.0/Edge track and change.runtimeconfig.json
+/Users/naima/Projects/Edge track and change/Edge track and change/bin/Debug/net7.0/Edge track and change.dll
+/Users/naima/Projects/Edge track and change/Edge track and change/bin/Debug/net7.0/Edge track and change.pdb
+/Users/naima/Projects/Edge track and change/Edge track and change/obj/Debug/net7.0/Edge track and change.dll
+/Users/naima/Projects/Edge track and change/Edge track and change/obj/Debug/net7.0/refint/Edge track and change.dll
+/Users/naima/Projects/Edge track and change/Edge track and change/obj/Debug/net7.0/Edge track and change.pdb
+/Users/naima/Projects/Edge track and change/Edge track and change/obj/Debug/net7.0/Edge track and change.genruntimeconfig.cache
+/Users/naima/Projects/Edge track and change/Edge track and change/obj/Debug/net7.0/ref/Edge track and change.dll
