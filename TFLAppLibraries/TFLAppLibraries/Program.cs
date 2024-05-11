@@ -1,7 +1,5 @@
 ﻿using System.Data;
-using Microsoft.VisualStudio.GraphModel;
 using QuickGraph;
-using QuickGraph.Algorithms.ShortestPath;
 
 namespace TFLAppLibraries;
 
@@ -9,26 +7,18 @@ class Program
 {
     static void Main(string[] args)
     {
-        // Create a graph
-        var graph = new AdjacencyGraph<string, Edge<string>>();
+        // Test shortest path algorithm
+        var startStation = "Embankment";
+        var startLine = "Circle";
+        var endStation = "Green Park";
+        var endLine = "Victoria";
+        var net = new Network();
+        var path = net.FindShortestPath(startStation, startLine, endStation, endLine);
 
-        // Add vertices
-        graph.AddVertex("A");
-        graph.AddVertex("B");
-        graph.AddVertex("C");
-
-        // Add edges (uncomment for weighted edges)
-        graph.AddEdge(new Edge<string>("A", "B"));
-        graph.AddEdge(new Edge<string>("B", "C"));
-        graph.AddEdge(new Edge<string>("C", "A"));
-
-        // Perform depth-first search
-        var dfs = new DijkstraShortestPathAlgorithm<string, Edge<string>>(graph, edge => 1);
-
-        Console.WriteLine(dfs.Distances);
-
-        dfs.Compute("A");
-
-        //Console.WriteLine(dfs.ToString());
+        if (path != null && path.Count > 0)
+            foreach (var edge in path)
+                Console.WriteLine(edge.Source + "\tto " + edge.Target + "\t,\t" + edge.GetTravelTime() + "min");
+        else
+            Console.WriteLine("Path not found");
     }
 }
