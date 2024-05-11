@@ -1,18 +1,20 @@
 ﻿using System;
+using QuickGraph;
+
 namespace TFLAppLibraries
 {
-    public abstract class Edge
+    public abstract class Edge : IEdge<string>
     {
 
         protected double time;
-        protected string stationFrom;
-        protected string stationTo;
+        public string Source { get; set; }
+        public string Target { get; set; }
 
         public Edge(double time, string stationFrom, string stationTo)
         {
             this.time = time;
-            this.stationFrom = stationFrom;
-            this.stationTo = stationTo;
+            this.Source = stationFrom;
+            this.Target = stationTo;
         }
 
         public double GetTime()

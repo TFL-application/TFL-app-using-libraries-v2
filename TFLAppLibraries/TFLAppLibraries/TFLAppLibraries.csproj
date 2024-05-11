@@ -11,10 +11,4 @@
     <PackageReference Include="Microsoft.VisualStudio.GraphModel" Version="17.9.37000" />
     <PackageReference Include="QuickGraph" Version="3.6.61119.7" />
   </ItemGroup>
-  <ItemGroup>
-    <None Remove="Edge track and change\bin\" />
-  </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Edge track and change\bin\" />
-  </ItemGroup>
 </Project>

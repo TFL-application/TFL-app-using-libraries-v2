@@ -1,0 +1,25 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 25.0.1706.11
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TFLAppLibraries", "TFLAppLibraries.csproj", "{42A59A61-EED2-45DB-83AA-7454A8D04EEE}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{42A59A61-EED2-45DB-83AA-7454A8D04EEE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{42A59A61-EED2-45DB-83AA-7454A8D04EEE}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{42A59A61-EED2-45DB-83AA-7454A8D04EEE}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{42A59A61-EED2-45DB-83AA-7454A8D04EEE}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {02CCA754-ADAD-4EC8-AB33-AE3A4755B404}
+	EndGlobalSection
+EndGlobal
