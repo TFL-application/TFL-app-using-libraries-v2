@@ -1,8 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Security.Cryptography;
 using QuickGraph;
 using QuickGraph.Algorithms.Observers;
 using QuickGraph.Algorithms.ShortestPath;
+using static System.Collections.Specialized.BitVector32;
 
 namespace TFLAppLibraries
 {
@@ -39,55 +41,68 @@ namespace TFLAppLibraries
             var knownVertices = new List<AlgorithmNode>();      // List of vertices whose shortest paths are known
             var unknownVertices = new List<AlgorithmNode>();    // List of vertices whose shortest paths are not yet known
 
-            // 1. Add first node
-            var firstNode = new AlgorithmNode                   // Create a structure for the node
+            // 1. Put start station node to unknown stations
+            // 2. Set start station node cost = 0 and previous nodes list = empty list
+            var firstNode = new AlgorithmNode 
             (
                 start,
-                0.0,                                            // Set the cost of the start node to 0
-                new List<Edge>()                                // and the node path to an empty list
+                0.0,                                            
+                new List<Edge>()
             );
-            unknownVertices.Add(firstNode);                     // Put the start node to unknown vertices
+            unknownVertices.Add(firstNode);
 
-
+            // 3. Check if there stations in unknown stations
             while (unknownVertices.Count > 0)                   // Start the algorithm loop over unknown vertices
             {
-                // 2. Find the station in unknown stations with the smallest cost
+                // 4. Find the station in unknown stations with the smallest cost
                 var selectedVertex = FindSmallestCostNode(unknownVertices);     // Used private method for that
 
-                // 3. Check if the found station is the destination
+                // 5. Check if the found station = destination
                 var selectedVertexItem = selectedVertex.node;
                 if (selectedVertexItem.Equals(destination))
                     return selectedVertex.nodePath;             // >>>>> EXIT from th algorithm if it is
 
-                // 4. Move the selected station
+                // 6. Move it from unknown stations
                 unknownVertices.Remove(selectedVertex);         // from unknown
                 knownVertices.Add(selectedVertex);              // to known
 
-                // 5. Find to which vertices the selected station is connected
+                // 7. Find to which stations it is connected and put them in connected vertices
                 var selectedVertexEdges = network.OutEdges(selectedVertexItem);
-                if (selectedVertexEdges.Count() > 0)            // if connected stations are found
-                {
-                    foreach (var edge in selectedVertexEdges)   // start a loop over them
-                    {
-                        // 6. Check if the connected station is not in known stations
-                        if (!knownVertices.Any(node => node.node == edge.Target))
-                        {
-                            // 7. Check if the connected station is or not in unknown stations
-                            var isUnknown = unknownVertices.Find(node => node.node == edge.Target);
-                            if (isUnknown == null ||                                            // 7a. If it is in - check if the cost to reach the station
-                                isUnknown.cost > selectedVertex.cost + edge.GetTravelTime())    // is less than the cost for it in the unknown vertices
-                            {
-                                if (isUnknown != null)                  // 7b. Replace it if it is in unknown
-                                    unknownVertices.Remove(isUnknown);  // To repace - first remove the old node from the unknownVertices list
 
-                                // 8. Update the cost and path for the connected station and add it to unknown vertices
-                                var newPath = new List<Edge>(selectedVertex.nodePath) { edge };
-                                var newNode = new AlgorithmNode(edge.Target, selectedVertex.cost + edge.GetTravelTime(), newPath);
-                                unknownVertices.Add(newNode);
-                            }
+                // start a loop over them (alternative for #8)
+                // as the library structure allows foreach-loop
+                foreach (var edge in selectedVertexEdges)   
+                {
+                   // 10. Check if it is in known stations
+                    if (!knownVertices.Any(node => node.node == edge.Target) && edge.GetTravelTime() != null)
+                    {
+                        var travelTime = edge.GetTravelTime() != null ? Convert.ToDouble(edge.GetTravelTime()) : 0.0;
+
+                        // 11. Check if it is in unknown stations
+                        var isUnknown = unknownVertices.Find(node => node.node == edge.Target);
+
+                        // 12. If it is - check if its cost + selected station cost
+                        // < the cost of the in the unknown stations
+                        if (isUnknown == null ||       
+                            isUnknown.cost > selectedVertex.cost + travelTime) 
+                        {
+                            // 13. Delete old record from unknown stations - if found
+                            if (isUnknown != null) 
+                                unknownVertices.Remove(isUnknown);
+
+                            // 14. Create path list for the connected station,
+                            // starting with the connected node, and add the selected node path to it
+                            var newPath = new List<Edge>(selectedVertex.nodePath) { edge };
+
+                            // 15. Set connected station cost = track travel time + cost of the selected station
+                            var newNode = new AlgorithmNode(edge.Target, selectedVertex.cost + travelTime, newPath);
+
+                            // 16. Put connected station to unknown stations
+                            unknownVertices.Add(newNode);
                         }
                     }
                 }
+                
             }
 
             return null;         // If no path is found, return null
@@ -102,7 +117,7 @@ namespace TFLAppLibraries
 
             foreach (AlgorithmNode node in nodeList)
             {
-                // Find the node with the smallest cost
+                // 4a. Find the node with the smallest cost
                 // and (if more than one found) the shortest path
                 if (node.cost < minCost ||
                     (node.cost == minCost && node.nodePath.Count < minPath))
@@ -126,7 +141,11 @@ namespace TFLAppLibraries
             var dijkstra = new DijkstraShortestPathAlgorithm<string, Edge>
             (
                 network,                                // with the graph
-                edge => edge.GetTravelTime()            // and a function to get the edge weights (travel times)
+                edge =>
+                {
+                    var travelTime = edge.GetTravelTime();
+                    return travelTime != null ? Convert.ToDouble(travelTime) : double.PositiveInfinity;
+                }                                       // and a function to get the edge weights (travel times)
             );
 
             // Initialize an observer to record predecessors during Dijkstra's

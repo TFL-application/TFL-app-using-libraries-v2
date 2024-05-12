@@ -24,6 +24,7 @@ namespace TFLAppLibraries
             network = data.network;
         }
 
+
         //added GETLINES METHOD TO PRINT LINE NAMES
         public void GetLines()
         {
@@ -61,234 +62,264 @@ namespace TFLAppLibraries
             }}
 
 
-    public void AddTimeDelay(string line ,string stationFrom, string stationTo,double time, bool bothDirections){
 
-                if (!lines.ContainsKey(line))
-                    {
-                        Console.WriteLine("Line Not Found");
-                        return;
-                    }
 
-                if (!lines[line].Contains(stationFrom) || !lines[line].Contains(stationTo))
+        public List<string>? GetAllStation(string line)
+        {
+            if (!lines.ContainsKey(line))
+            {
+                Console.WriteLine("Line Not Found");
+                return null;
+            }
+            else
+            {
+                return lines[line];
+            }
+        }
+
+
+        public void AddTimeDelay(string line, string stationFrom, string stationTo, double time, bool bothDirections)
+        {
+            if (!lines.ContainsKey(line))
+            {
+                Console.WriteLine("Line Not Found");
+            }
+
+            if (!lines[line].Contains(stationFrom) || !lines[line].Contains(stationTo))
+            {
+                Console.WriteLine("Station Not Found in Line");
+            }
+
+            var trackFrom = network.OutEdges(stationFrom + ", " + line)
+                .Where(edge => edge.GetType() == typeof(Track));
+
+            if (trackFrom.Any())
+            {
+                foreach (Track track in trackFrom)
                 {
-                    Console.WriteLine("Station Not Found in Line");
-                    return;
-                }
-
-                var trackFrom = network.OutEdges(stationFrom + "," + line);
-
-              
-                if (trackFrom.Any())
-                {
-                    
-                    foreach (var track in trackFrom)
+                    if (track.Target == stationTo + ", " + line)
                     {
-                        if (track.Target==stationTo +" , " + line)
+                        track.SetDelay(time);
+
+                        //storing delayed tracks in Delayed tracks
+                        if (!delayedTracks.ContainsKey(line))
                         {
-                            
-                            track.SetDelay(time);
-
-
-                            //storing delayed tracks in Delayed tracks
-                            if (!delayedTracks.ContainsKey(stationFrom))
-                            {
-                                delayedTracks[stationFrom] = new List<Track>();
-                            }
-                                
-                            
-                            delayedTracks[stationFrom].Add(track);
-                                
+                            delayedTracks[line] = new List<Track>();
                         }
+
+                        delayedTracks[line].Add(track);
+
+
                         if (bothDirections)
                         {
                             // Find the outgoing track from stationTo to stationFrom
-                            var trackTo = network.OutEdges(stationTo + " , " + line);
+                            var trackTo = network.OutEdges(stationTo + ", " + line)
+                                .Where(edge => edge.GetType() == typeof(Track));
 
                             // Update delay time for the found track 
-                            foreach (var reverseTrack in trackTo)
+                            foreach (Track reverseTrack in trackTo)
                             {
-                                if (reverseTrack.Target == stationFrom + " , " + line)
+                                if (reverseTrack.Target == stationFrom + ", " + line)
                                 {
                                     reverseTrack.SetDelay(time);
-                                    break;
                                 }
 
-                            if (!delayedTracks.ContainsKey(stationTo))
-                            {
-                                delayedTracks[stationTo] = new List<Track>();
-                            }
-                                
-                        delayedTracks[stationTo].Add(track);
+                                if (!delayedTracks.ContainsKey(line))
+                                {
+                                    delayedTracks[line] = new List<Track>();
+                                }
+
+                                delayedTracks[line].Add(track);
                             }
                         }
                     }
                 }
-             }}
+            }
+        }
 
 
-            public void DeleteTimeDelay(string line ,string stationFrom, string stationTo,double time, bool bothDirections){
-                if (!lines.ContainsKey(line))
-                    {
-                        Console.WriteLine("Line Not Found");
-                        return;
-                    }
+        public void DeleteTimeDelay(string line, string stationFrom, string stationTo, bool bothDirections)
+        {
+            if (!lines.ContainsKey(line))
+            {
+                Console.WriteLine("Line Not Found");
+                return;
+            }
 
-                if (!lines[line].Contains(stationFrom) || !lines[line].Contains(stationTo))
+            if (!lines[line].Contains(stationFrom) || !lines[line].Contains(stationTo))
+            {
+                Console.WriteLine("Station Not Found in Line");
+                return;
+            }
+
+            var trackFrom = network.OutEdges(stationFrom + ", " + line)
+                .Where(edge => edge.GetType() == typeof(Track));
+
+            if (trackFrom.Any())
+            {
+                foreach (Track track in trackFrom)
                 {
-                    Console.WriteLine("Station Not Found in Line");
-                    return;
-                }
-
-                var trackFrom = network.OutEdges(stationFrom + "," + line);if (trackFrom.Any())
-                {
-                    
-                    foreach (var track in trackFrom)
+                    if (track.Target == stationTo + ", " + line)
                     {
-                        if (track.Target==stationTo +" , " + line)
-                        {
-                            
-                            track.SetDelay(0.0);
+                        track.SetDelay(0.0);
 
-
-                            //storing delayed tracks in Delayed tracks
-                        if (delayedTracks.ContainsKey(stationFrom))
+                        //storing delayed tracks in Delayed tracks
+                        if (delayedTracks.ContainsKey(line))
                         {
-                            delayedTracks[stationFrom].Remove(track);
-                        }}
+                            delayedTracks[line].Remove(track);
+                        }
+
                         if (bothDirections)
                         {
                             // Find the outgoing track from stationTo to stationFrom
-                            var trackTo = network.OutEdges(stationTo + " , " + line);
+                            var trackTo = network.OutEdges(stationTo + ", " + line)
+                                .Where(edge => edge.GetType() == typeof(Track));
 
                             // Update delay time for the found track 
-                            foreach (var reverseTrack in trackTo)
+                            foreach (Track reverseTrack in trackTo)
                             {
-                            if (delayedTracks.ContainsKey(stationTo))
+                                if (reverseTrack.GetType() == typeof(Track))
                                 {
-                                    delayedTracks[stationTo].Remove(reverseTrack);
-                                }
+                                    // Reset delay time for the found track
+                                    reverseTrack.SetDelay(0);
 
-                                // Reset delay time for the found track
-                                reverseTrack.SetDelay(0);
-                                }
-                        }
-                    }
-                }}
-
-
-            public void CloseTrack(string line,  string stationFrom,  string stationTo, double time,bool bothDirections){
-
-                if (!lines.ContainsKey(line))
-                    {
-                        Console.WriteLine("Line Not Found");
-                        return;
-                    }
-
-                if (!lines[line].Contains(stationFrom) || !lines[line].Contains(stationTo))
-                {
-                    Console.WriteLine("Station Not Found in Line");
-                    return;
-                }
-
-                var trackFrom = network.OutEdges(stationFrom + "," + line);
-
-                foreach (var track in trackFrom)
-                {
-                    if (track.Target == stationTo + "," + line)
-                    {
-                        // Set IsOpen attribute of the track to false
-                        track.SetIsOpen(false);
-                        
-                        // Add the closed track to closedTracks dictionary using stationFrom as key
-                        if (!closedTracks.ContainsKey(stationFrom))
-                        {
-                            closedTracks[stationFrom] = new List<Track>();
-                        }
-                        closedTracks[stationFrom].Add(track);
-
-                        // If bothDirections is true, also closing track from stationTo to stationFrom
-                        if (bothDirections)
-                        {
-                            // Finding the outgoing track from stationTo to stationFrom
-                            var trackTo = network.OutEdges(stationTo + " , " + line);
-
-                            // Close the track for the found track 
-                            foreach (var reverseTrack in trackTo)
-                            {
-                                if (reverseTrack.Target == stationFrom + "," + line)
-                                {
-                                    // Set IsOpen attribute of the track to false
-                                    reverseTrack.SetIsOpen(false);
-
-                                    // Add the closed track to closedTracks dictionary using stationTo as key
-                                    if (!closedTracks.ContainsKey(stationTo))
+                                    if (delayedTracks.ContainsKey(line))
                                     {
-                                        closedTracks[stationTo] = new List<Track>();
+                                        delayedTracks[line].Remove(reverseTrack);
                                     }
-                                    closedTracks[stationTo].Add(reverseTrack);
                                 }
                             }
                         }
                     }
-                
-                }}
-           public void OpenTrack(string line,  string stationFrom,  string stationTo, double time,bool bothDirections){
+                }
+            }
+        }
 
-                if (!lines.ContainsKey(line))
-                    {
-                        Console.WriteLine("Line Not Found");
-                        return;
-                    }
 
-                if (!lines[line].Contains(stationFrom) || !lines[line].Contains(stationTo))
+        public void CloseTrack(string line, string stationFrom, string stationTo, bool bothDirections)
+        {
+            if (!lines.ContainsKey(line))
+            {
+                Console.WriteLine("Line Not Found");
+                return;
+            }
+
+            if (!lines[line].Contains(stationFrom) || !lines[line].Contains(stationTo))
+            {
+                Console.WriteLine("Station Not Found in Line");
+                return;
+            }
+
+            var trackFrom = network.OutEdges(stationFrom + ", " + line)
+                .Where(edge => edge.GetType() == typeof(Track));
+
+            foreach (Track track in trackFrom)
+            {
+                if (track.Target == stationTo + ", " + line)
                 {
-                    Console.WriteLine("Station Not Found in Line");
-                    return;
+                    // Set IsOpen attribute of the track to false
+                    track.SetIsOpen(false);
+
+                    // Add the closed track to closedTracks dictionary using stationFrom as key
+                    if (!closedTracks.ContainsKey(line))
+                    {
+                        closedTracks[line] = new List<Track>();
+                    }
+                    closedTracks[line].Add(track);
+
+                    // If bothDirections is true, also closing track from stationTo to stationFrom
+                    if (bothDirections)
+                    {
+                        // Finding the outgoing track from stationTo to stationFrom
+                        var trackTo = network.OutEdges(stationTo + ", " + line)
+                            .Where(edge => edge.GetType() == typeof(Track));
+
+                        // Close the track for the found track 
+                        foreach (Track reverseTrack in trackTo)
+                        {
+                            if (reverseTrack.Target == stationFrom + ", " + line)
+                            {
+                                // Set IsOpen attribute of the track to false
+                                reverseTrack.SetIsOpen(false);
+
+                                // Add the closed track to closedTracks dictionary using stationTo as key
+                                if (!closedTracks.ContainsKey(line))
+                                {
+                                    closedTracks[line] = new List<Track>();
+                                }
+                                closedTracks[line].Add(reverseTrack);
+                            }
+                        }
+                    }
                 }
 
-                var trackFrom = network.OutEdges(stationFrom + "," + line);
+            }
+        }
 
-                foreach (var track in trackFrom)
+
+        public void OpenTrack(string line, string stationFrom, string stationTo, bool bothDirections)
+        {
+            if (!lines.ContainsKey(line))
+            {
+                Console.WriteLine("Line Not Found");
+                return;
+            }
+
+            if (!lines[line].Contains(stationFrom) || !lines[line].Contains(stationTo))
+            {
+                Console.WriteLine("Station Not Found in Line");
+                return;
+            }
+
+            var trackFrom = network.OutEdges(stationFrom + ", " + line)
+                .Where(edge => edge.GetType() == typeof(Track));
+
+            foreach (Track track in trackFrom)
+            {
+                if (track.Target == stationTo + ", " + line)
                 {
-                    if (track.Target == stationTo + "," + line)
+                    // Set IsOpen attribute of the track to false
+                    track.SetIsOpen(true);
+
+                    if (closedTracks.ContainsKey(line))
                     {
-                        // Set IsOpen attribute of the track to false
-                        track.SetIsOpen(true);
+                        closedTracks[line].Remove(track);
+                    }
 
-                        closedTracks[stationFrom].remove(track);
-                        
-                     
+                    // If bothDirections is true, also closing track from stationTo to stationFrom
+                    if (bothDirections)
+                    {
+                        // Finding the outgoing track from stationTo to stationFrom
+                        var trackTo = network.OutEdges(stationTo + ", " + line)
+                            .Where(edge => edge.GetType() == typeof(Track));
 
-                        // If bothDirections is true, also closing track from stationTo to stationFrom
-                        if (bothDirections)
+                        // Close the track for the found track 
+                        foreach (Track reverseTrack in trackTo)
                         {
-                            // Finding the outgoing track from stationTo to stationFrom
-                            var trackTo = network.OutEdges(stationTo + " , " + line);
-
-                            // Close the track for the found track 
-                            foreach (var reverseTrack in trackTo)
+                            if (reverseTrack.Target == stationFrom + ", " + line)
                             {
-                                if (reverseTrack.Target == stationFrom + "," + line)
-                                {
-                                    // Set IsOpen attribute of the track to false
-                                    reverseTrack.SetIsOpen(true);
+                                // Set IsOpen attribute of the track to false
+                                reverseTrack.SetIsOpen(true);
 
-                                    // Add the closed track to closedTracks dictionary using stationTo as key
-                                   closedTracks[stationFrom].remove(track);
+                                // Add the closed track to closedTracks dictionary using stationTo as key
+                                if (closedTracks.ContainsKey(line))
+                                {
+                                    closedTracks[stationFrom].Remove(reverseTrack);
                                 }
                             }
                         }
                     }
-                
-                }}
+                }
+            }
+        }
 
 
         public List<Edge> FindShortestPath(string startStation, string startLine, string destinationStation, string destinationLine)
         {
             var start = startStation + ", " + startLine;
             var destination = destinationStation + ", " + destinationLine;
-            //return FastestPathAlgorithm.GetFastestPath(this.network, start, destination);
-            return FastestPathAlgorithm.QuickGraphLibraryMethod(this.network, start, destination);
+            return FastestPathAlgorithm.GetFastestPath(this.network, start, destination);
+            // return FastestPathAlgorithm.QuickGraphLibraryMethod(this.network, start, destination);
         }
     }
 }
