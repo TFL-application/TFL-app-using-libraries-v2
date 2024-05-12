@@ -25,6 +25,45 @@ namespace TFLAppLibraries
         }
 
 
+        //added GETLINES METHOD TO PRINT LINE NAMES
+        public void GetLines()
+        {
+            try
+            {
+                if (lines.Count <= 0)
+                {
+                    throw new ArgumentException("No valid Data to Show");
+                }
+
+                foreach (var key in lines.Keys)
+                {
+                    Console.WriteLine($"Line : {key}");
+                
+                }
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"An error occurred: {ex.Message}");
+            }
+            }
+            
+          public void GetAllStation( string line){
+            if (!lines.ContainsKey(line)){
+                Console.log("Line Not Found");
+            }
+            else{
+
+                 List<Station> stations = lines[line];
+                foreach (Station station in stations)
+                {
+                    Console.WriteLine(station);
+                }
+                
+            }}
+
+
+
+
         public List<string>? GetAllStation(string line)
         {
             if (!lines.ContainsKey(line))
@@ -37,6 +76,7 @@ namespace TFLAppLibraries
                 return lines[line];
             }
         }
+
 
         public void AddTimeDelay(string line, string stationFrom, string stationTo, double time, bool bothDirections)
         {

@@ -15,6 +15,17 @@ class Program
         var net = new Network();
         var path = net.FindShortestPath(startStation, startLine, endStation, endLine);
 
+            Menu networkMenu=new Menu();
+
+            networkMenu.Display_menu();
+
+            int menuOperation=networkMenu.Tfl_menu();
+
+            networkMenu.StartJourney(menuOperation);
+
+
+
+
         if (path != null && path.Count > 0)
             foreach (var edge in path)
                 Console.WriteLine(edge.Source + "\tto " + edge.Target + "\t,\t" + edge.GetTravelTime() + "min");
