@@ -24,15 +24,43 @@ namespace TFLAppLibraries
             network = data.network;
         }
 
-       
+        //added GETLINES METHOD TO PRINT LINE NAMES
+        public void GetLines()
+        {
+            try
+            {
+                if (lines.Count <= 0)
+                {
+                    throw new ArgumentException("No valid Data to Show");
+                }
 
-          public List<Station> GetAllStation( string line){
+                foreach (var key in lines.Keys)
+                {
+                    Console.WriteLine($"Line : {key}");
+                
+                }
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"An error occurred: {ex.Message}");
+            }
+            }
+            
+          public void GetAllStation( string line){
             if (!lines.ContainsKey(line)){
                 Console.log("Line Not Found");
             }
             else{
-                return lines[line];
+
+                 List<Station> stations = lines[line];
+                foreach (Station station in stations)
+                {
+                    Console.WriteLine(station);
+                }
+                
             }}
+
+
     public void AddTimeDelay(string line ,string stationFrom, string stationTo,double time, bool bothDirections){
 
                 if (!lines.ContainsKey(line))
