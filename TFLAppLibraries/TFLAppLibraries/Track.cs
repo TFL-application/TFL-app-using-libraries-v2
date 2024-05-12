@@ -16,12 +16,16 @@ namespace TFLAppLibraries
         }
 
         // Override the abstract method from Edge class to calculate travel time
-        public override double GetTravelTime()
+        public override double? GetTravelTime()
         {
-
-
-            return base.GetTravelTime() + delay;
-
+            if (this.isOpen)
+            {
+                return base.GetTravelTime() + delay;
+            }
+            else
+            {
+                return null;
+            }
         }
 
         public bool GetIsOpen()
