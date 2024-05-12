@@ -29,12 +29,10 @@ namespace TFLAppLibraries
         }
 
 
-        public virtual double GetTravelTime()
+        public virtual double? GetTravelTime()
         {
             return time;
         }
-
-
     }
 }
 

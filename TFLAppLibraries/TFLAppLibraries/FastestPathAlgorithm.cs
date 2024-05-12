@@ -74,15 +74,17 @@ namespace TFLAppLibraries
                 foreach (var edge in selectedVertexEdges)   
                 {
                    // 10. Check if it is in known stations
-                    if (!knownVertices.Any(node => node.node == edge.Target))
+                    if (!knownVertices.Any(node => node.node == edge.Target) && edge.GetTravelTime() != null)
                     {
+                        var travelTime = edge.GetTravelTime() != null ? Convert.ToDouble(edge.GetTravelTime()) : 0.0;
+
                         // 11. Check if it is in unknown stations
                         var isUnknown = unknownVertices.Find(node => node.node == edge.Target);
 
                         // 12. If it is - check if its cost + selected station cost
                         // < the cost of the in the unknown stations
                         if (isUnknown == null ||       
-                            isUnknown.cost > selectedVertex.cost + edge.GetTravelTime()) 
+                            isUnknown.cost > selectedVertex.cost + travelTime) 
                         {
                             // 13. Delete old record from unknown stations - if found
                             if (isUnknown != null) 
@@ -93,7 +95,7 @@ namespace TFLAppLibraries
                             var newPath = new List<Edge>(selectedVertex.nodePath) { edge };
 
                             // 15. Set connected station cost = track travel time + cost of the selected station
-                            var newNode = new AlgorithmNode(edge.Target, selectedVertex.cost + edge.GetTravelTime(), newPath);
+                            var newNode = new AlgorithmNode(edge.Target, selectedVertex.cost + travelTime, newPath);
 
                             // 16. Put connected station to unknown stations
                             unknownVertices.Add(newNode);
@@ -139,7 +141,11 @@ namespace TFLAppLibraries
             var dijkstra = new DijkstraShortestPathAlgorithm<string, Edge>
             (
                 network,                                // with the graph
-                edge => edge.GetTravelTime()            // and a function to get the edge weights (travel times)
+                edge =>
+                {
+                    var travelTime = edge.GetTravelTime();
+                    return travelTime != null ? Convert.ToDouble(travelTime) : double.PositiveInfinity;
+                }                                       // and a function to get the edge weights (travel times)
             );
 
             // Initialize an observer to record predecessors during Dijkstra's
