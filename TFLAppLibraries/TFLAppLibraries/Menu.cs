@@ -59,7 +59,6 @@ namespace TFLAppLibraries
             return choice;
         }
 
-
         // THis method will return choice of operation Cutomer wants to perform
         public int Customer_Menu(string? name)
         {
@@ -77,8 +76,6 @@ namespace TFLAppLibraries
             Console.WriteLine("** ---------------------------------------------------------------------**");
             Console.WriteLine("** 1. Choose Station by Line                                            **");
             Console.WriteLine("**                                                                      **");
-            //Console.WriteLine("** 2. Choose Journey by Station Name                                    **");
-            //Console.WriteLine("**                                                                      **");
             Console.WriteLine("** 2. Exit to Main Menu                                                 **");
             Console.WriteLine("** ---------------------------------------------------------------------**");
             Console.WriteLine("**************************************************************************");
@@ -234,15 +231,10 @@ namespace TFLAppLibraries
                         break;
 
                     case 2:
-                    //// Exiting back to main menu
-                    //    int menuChoice=Tfl_menu();
-                    //    StartJourney(menuChoice);
                         break;
 
                     default:
                         Console.WriteLine("Invalid Option Entered! Please choose Valid Option");
-                        //int choice= Customer_Menu();
-                        //Customer_Operation(choice);
                         break;
                 }
             } while (option != 2);

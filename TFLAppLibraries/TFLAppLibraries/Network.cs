@@ -283,7 +283,6 @@ namespace TFLAppLibraries
             }
         }
 
-
         public Track[] GetDelayedTracks()
         {
             var resultList = new List<Track>();
