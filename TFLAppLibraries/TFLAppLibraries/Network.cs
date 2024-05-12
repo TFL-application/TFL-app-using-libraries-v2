@@ -24,70 +24,36 @@ namespace TFLAppLibraries
             network = data.network;
         }
 
-
         //added GETLINES METHOD TO PRINT LINE NAMES
-        public void GetLines()
+
+        public string[] GetLines()
         {
-            try
-            {
-                if (lines.Count <= 0)
-                {
-                    throw new ArgumentException("No valid Data to Show");
-                }
-
-                foreach (var key in lines.Keys)
-                {
-                    Console.WriteLine($"Line : {key}");
-                
-                }
-            }
-            catch (Exception ex)
-            {
-                Console.WriteLine($"An error occurred: {ex.Message}");
-            }
-            }
-            
-          public void GetAllStation( string line){
-            if (!lines.ContainsKey(line)){
-                Console.log("Line Not Found");
-            }
-            else{
-
-                 List<Station> stations = lines[line];
-                foreach (Station station in stations)
-                {
-                    Console.WriteLine(station);
-                }
-                
-            }}
-
-
-
-
-        public List<string>? GetAllStation(string line)
-        {
-            if (!lines.ContainsKey(line))
-            {
-                Console.WriteLine("Line Not Found");
-                return null;
-            }
-            else
-            {
-                return lines[line];
-            }
+            return lines.Keys.ToArray();
         }
 
+        public string[] GetAllStations(string line)
+        {
+            return lines[line].ToArray();
+        }
 
         public void AddTimeDelay(string line, string stationFrom, string stationTo, double time, bool bothDirections)
         {
             if (!lines.ContainsKey(line))
             {
                 Console.WriteLine("Line Not Found");
+                return;
             }
 
             if (!lines[line].Contains(stationFrom) || !lines[line].Contains(stationTo))
             {
                 Console.WriteLine("Station Not Found in Line");
+                return;
+            }
+
+            if (time <= 0.0)
+            {
+                Console.WriteLine("Time should be more than 0");
+                return;
             }
 
             var trackFrom = network.OutEdges(stationFrom + ", " + line)
@@ -104,11 +70,11 @@ namespace TFLAppLibraries
                         //storing delayed tracks in Delayed tracks
                         if (!delayedTracks.ContainsKey(line))
                         {
-                            delayedTracks[line] = new List<Track>();
+                            delayedTracks.Add(line, new List<Track>());
                         }
 
                         delayedTracks[line].Add(track);
-
+                        Console.WriteLine("Time delay added");
 
                         if (bothDirections)
                         {
@@ -122,21 +88,21 @@ namespace TFLAppLibraries
                                 if (reverseTrack.Target == stationFrom + ", " + line)
                                 {
                                     reverseTrack.SetDelay(time);
-                                }
 
-                                if (!delayedTracks.ContainsKey(line))
-                                {
-                                    delayedTracks[line] = new List<Track>();
-                                }
+                                    if (!delayedTracks.ContainsKey(line))
+                                    {
+                                        delayedTracks.Add(line, new List<Track>());
+                                    }
 
-                                delayedTracks[line].Add(track);
+                                    delayedTracks[line].Add(reverseTrack);
+                                    Console.WriteLine("Time delay added");
+                                }
                             }
                         }
                     }
                 }
             }
         }
-
 
         public void DeleteTimeDelay(string line, string stationFrom, string stationTo, bool bothDirections)
         {
@@ -167,6 +133,7 @@ namespace TFLAppLibraries
                         if (delayedTracks.ContainsKey(line))
                         {
                             delayedTracks[line].Remove(track);
+                            Console.WriteLine("Time delay deleted");
                         }
 
                         if (bothDirections)
@@ -178,7 +145,7 @@ namespace TFLAppLibraries
                             // Update delay time for the found track 
                             foreach (Track reverseTrack in trackTo)
                             {
-                                if (reverseTrack.GetType() == typeof(Track))
+                                if (reverseTrack.Target == stationFrom + ", " + line)
                                 {
                                     // Reset delay time for the found track
                                     reverseTrack.SetDelay(0);
@@ -186,6 +153,7 @@ namespace TFLAppLibraries
                                     if (delayedTracks.ContainsKey(line))
                                     {
                                         delayedTracks[line].Remove(reverseTrack);
+                                        Console.WriteLine("Time delay deleted");
                                     }
                                 }
                             }
@@ -194,7 +162,6 @@ namespace TFLAppLibraries
                 }
             }
         }
-
 
         public void CloseTrack(string line, string stationFrom, string stationTo, bool bothDirections)
         {
@@ -219,11 +186,12 @@ namespace TFLAppLibraries
                 {
                     // Set IsOpen attribute of the track to false
                     track.SetIsOpen(false);
+                    Console.WriteLine("Track closed");
 
                     // Add the closed track to closedTracks dictionary using stationFrom as key
                     if (!closedTracks.ContainsKey(line))
                     {
-                        closedTracks[line] = new List<Track>();
+                        closedTracks.Add(line, new List<Track>());
                     }
                     closedTracks[line].Add(track);
 
@@ -245,9 +213,10 @@ namespace TFLAppLibraries
                                 // Add the closed track to closedTracks dictionary using stationTo as key
                                 if (!closedTracks.ContainsKey(line))
                                 {
-                                    closedTracks[line] = new List<Track>();
+                                    closedTracks.Add(line, new List<Track>());
                                 }
                                 closedTracks[line].Add(reverseTrack);
+                                Console.WriteLine("Track closed");
                             }
                         }
                     }
@@ -255,7 +224,6 @@ namespace TFLAppLibraries
 
             }
         }
-
 
         public void OpenTrack(string line, string stationFrom, string stationTo, bool bothDirections)
         {
@@ -280,6 +248,7 @@ namespace TFLAppLibraries
                 {
                     // Set IsOpen attribute of the track to false
                     track.SetIsOpen(true);
+                    Console.WriteLine("Track opened");
 
                     if (closedTracks.ContainsKey(line))
                     {
@@ -300,11 +269,12 @@ namespace TFLAppLibraries
                             {
                                 // Set IsOpen attribute of the track to false
                                 reverseTrack.SetIsOpen(true);
+                                Console.WriteLine("Track opened");
 
                                 // Add the closed track to closedTracks dictionary using stationTo as key
                                 if (closedTracks.ContainsKey(line))
                                 {
-                                    closedTracks[stationFrom].Remove(reverseTrack);
+                                    closedTracks[line].Remove(reverseTrack);
                                 }
                             }
                         }
@@ -314,12 +284,30 @@ namespace TFLAppLibraries
         }
 
 
+        public Track[] GetDelayedTracks()
+        {
+            var resultList = new List<Track>();
+            foreach (List<Track> list in delayedTracks.Values)
+                resultList.AddRange(list);
+
+            return resultList.ToArray();
+        }
+
+        public Track[] GetClosedTracks()
+        {
+            var resultList = new List<Track>();
+            foreach (List<Track> list in closedTracks.Values)
+                resultList.AddRange(list);
+
+            return resultList.ToArray();
+        }
+
         public List<Edge> FindShortestPath(string startStation, string startLine, string destinationStation, string destinationLine)
         {
             var start = startStation + ", " + startLine;
             var destination = destinationStation + ", " + destinationLine;
-            return FastestPathAlgorithm.GetFastestPath(this.network, start, destination);
-            // return FastestPathAlgorithm.QuickGraphLibraryMethod(this.network, start, destination);
+            return FastestPathAlgorithm.GetFastestPath(this.network, start, destination);              // Method with handcoded algorithm
+            // return FastestPathAlgorithm.QuickGraphLibraryMethod(this.network, start, destination);  // Method with library algorithm
         }
     }
 }

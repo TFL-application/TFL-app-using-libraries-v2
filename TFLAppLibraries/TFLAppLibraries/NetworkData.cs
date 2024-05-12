@@ -600,7 +600,7 @@ namespace TFLAppLibraries
 
             // 3. Add line
             var n = this.lines["Northern"];
-            n.Concat(northernLineEastStations).ToList();
+            n.AddRange(northernLineEastStations);
 
             // 4. Create connections to the stations on the previous lines both ways
             var moorgate1 = new Change("Moorgate, Northern", "Moorgate, Circle");
