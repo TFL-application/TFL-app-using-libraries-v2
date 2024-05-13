@@ -601,7 +601,7 @@ namespace TFLAppLibraries
                 return;
             }
 
-            Console.WriteLine($"Journey from {path[0].Target} to {path[path.Count - 1].Source}");
+            Console.WriteLine($"Journey from {path[0].Source} to {path[path.Count - 1].Target}");
             Console.WriteLine("");
             int skip = 0;
             double skipTime = 0.0;
