@@ -419,7 +419,7 @@ namespace TFLAppLibraries
                             StationB = Console.ReadLine();
                         }
 
-                        Console.WriteLine("Is the Delay in both Directions? choose between true or false");
+                        Console.WriteLine("Is the Track Close in both Directions? choose between true or false");
                         //calling boolvalue function
                         bool directionV = boolValue();
                         Console.Clear();
@@ -436,7 +436,7 @@ namespace TFLAppLibraries
                             var lines3 = network.GetLines();
 
                             Console.WriteLine("");
-                            Console.Write("Enter Line name to close track: ");
+                            Console.Write("Enter Line name to Open track: ");
                             string? Linename = Console.ReadLine();
                             while (Linename == "" || Linename is null || !lines3.Contains(Linename))
                             {
@@ -447,7 +447,7 @@ namespace TFLAppLibraries
                             var lineStations3 = network.GetAllStations(Linename);
 
                             Console.WriteLine("");
-                            Console.Write("Enter Station name to Close From: ");
+                            Console.Write("Enter Station name to Open From: ");
                             string stationA = Console.ReadLine();
                             while (stationA == "" || stationA is null
                                 || !lineStations3.Contains(stationA))
@@ -457,7 +457,7 @@ namespace TFLAppLibraries
                             }
 
                             Console.WriteLine("");
-                            Console.Write("Enter Station name to Close Track To: ");
+                            Console.Write("Enter Station name to Open Track To: ");
                             string stationB = Console.ReadLine();
                             while (stationB == "" || stationB is null
                                 || !lineStations3.Contains(stationB))
@@ -466,7 +466,7 @@ namespace TFLAppLibraries
                                 stationB = Console.ReadLine();
                             }
 
-                            Console.WriteLine("Is the Delay in both Directions? choose between true or false");
+                            Console.WriteLine("Is the Track Open in both Directions? choose between true or false");
                             //calling boolvalue function
                             bool dir = boolValue();
                             Console.Clear();
