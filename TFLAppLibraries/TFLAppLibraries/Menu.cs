@@ -64,7 +64,6 @@ namespace TFLAppLibraries
         {
             Console.Clear();
             Display_menu();
-            Console.WriteLine();
             Console.WriteLine("**************************************************************************");
             Console.WriteLine("**                                                                      **");
             Console.WriteLine($"           Hello {name} !How we May help you?                          **");
@@ -100,7 +99,6 @@ namespace TFLAppLibraries
         {
             Console.Clear();
             Display_menu();
-            Console.WriteLine();
             Console.WriteLine("**                                                                      **");
             Console.WriteLine("** ---------------------------------------------------------------------**");
             Console.WriteLine("**                                                                      **");
@@ -349,7 +347,7 @@ namespace TFLAppLibraries
                                 || !lineStations1.Contains(FromStation))
                             {
                                 Console.Write("Enter Station again: ");
-                                StationStart = Console.ReadLine();
+                                FromStation = Console.ReadLine();
                             }
 
                             Console.WriteLine("");
@@ -359,7 +357,7 @@ namespace TFLAppLibraries
                                 || !lineStations1.Contains(ToStation))
                             {
                                 Console.Write("Enter Station again: ");
-                                StationEnd = Console.ReadLine();
+                                ToStation = Console.ReadLine();
                             }
 
                             Console.WriteLine("Is the Delay in both Directions? choose between true or false");
@@ -408,7 +406,7 @@ namespace TFLAppLibraries
                             || !lineStations2.Contains(StationA))
                         {
                             Console.Write("Enter Station again: ");
-                            StationStart = Console.ReadLine();
+                            StationA = Console.ReadLine();
                         }
 
                         Console.WriteLine("");
@@ -418,7 +416,7 @@ namespace TFLAppLibraries
                             || !lineStations2.Contains(StationB))
                         {
                             Console.Write("Enter Station again: ");
-                            StationEnd = Console.ReadLine();
+                            StationB = Console.ReadLine();
                         }
 
                         Console.WriteLine("Is the Delay in both Directions? choose between true or false");
@@ -455,7 +453,7 @@ namespace TFLAppLibraries
                                 || !lineStations3.Contains(stationA))
                             {
                                 Console.Write("Enter Station again: ");
-                                StationStart = Console.ReadLine();
+                                stationA = Console.ReadLine();
                             }
 
                             Console.WriteLine("");
@@ -465,7 +463,7 @@ namespace TFLAppLibraries
                                 || !lineStations3.Contains(stationB))
                             {
                                 Console.Write("Enter Station again: ");
-                                StationEnd = Console.ReadLine();
+                                stationB = Console.ReadLine();
                             }
 
                             Console.WriteLine("Is the Delay in both Directions? choose between true or false");

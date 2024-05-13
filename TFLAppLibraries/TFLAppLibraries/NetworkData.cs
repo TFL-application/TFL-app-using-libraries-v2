@@ -442,7 +442,7 @@ namespace TFLAppLibraries
             network.AddEdge(ox2);
 
 
-            // Central
+            // Piccadilly
             // 1. Declare line
             var piccadillyName = "Piccadilly";
 
@@ -638,6 +638,6 @@ namespace TFLAppLibraries
                 }
             }
         }
-	}
+    }
 }
 
