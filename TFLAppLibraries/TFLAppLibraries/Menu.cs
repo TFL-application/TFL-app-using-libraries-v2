@@ -28,7 +28,6 @@ namespace TFLAppLibraries
         {
             Console.Clear();
             Display_menu();
-            Console.WriteLine();
             Console.WriteLine("**************************************************************************");
             Console.WriteLine("** ---------------------------------------------------------------------**");
             Console.WriteLine("**              Please choose from options below:                       **");
@@ -66,7 +65,7 @@ namespace TFLAppLibraries
             Display_menu();
             Console.WriteLine("**************************************************************************");
             Console.WriteLine("**                                                                      **");
-            Console.WriteLine($"           Hello {name} !How we May help you?                          **");
+            Console.WriteLine($"**           Hello {name} !How we May help you?                          **");
             Console.WriteLine("**                                                                      **");
             Console.WriteLine("** ---------------------------------------------------------------------**");
             Console.WriteLine("**                                                                      **");
@@ -595,8 +594,6 @@ namespace TFLAppLibraries
         public void ShowPath(List<Edge> path)
         {
             Console.Clear();
-            Console.WriteLine($"Journey from {path[0].Target} to {path[path.Count - 1].Source}");
-            Console.WriteLine("");
             if (path == null || path.Count == 0)
             {
                 Console.WriteLine("Path is not found");
@@ -604,6 +601,8 @@ namespace TFLAppLibraries
                 return;
             }
 
+            Console.WriteLine($"Journey from {path[0].Target} to {path[path.Count - 1].Source}");
+            Console.WriteLine("");
             int skip = 0;
             double skipTime = 0.0;
             double total = 0.0;
